@@ -1,32 +1,22 @@
+import { createReducer } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import {
-  ADD_TO_CART,
-  REMOVE_FROM_CART_BY_ID,
-  GET_ALL_CONTACTS_FROM_LOCAL_STORAGE,
-  CHANGE_FILTER,
-} from "./contactsActions";
+  addToCart,
+  changeFilter,
+  getAllContactsFromLocaleStorage,
+  removeFromCartByID,
+} from "./contactsActions.js";
 
-const contactItemsReducer = (state = [], action) => {
-  switch (action.type) {
-    case ADD_TO_CART:
-      return [...state, action.payload];
-    case REMOVE_FROM_CART_BY_ID:
-      return state.filter((contact) => contact.id !== action.payload);
-    case GET_ALL_CONTACTS_FROM_LOCAL_STORAGE:
-      return action.payload;
-    default:
-      return state;
-  }
-};
+const contactItemsReducer = createReducer([], {
+  [addToCart]: (state, { payload }) => [...state, payload],
+  [removeFromCartByID]: (state, { payload }) =>
+    state.filter((contact) => contact.id !== payload),
+  [getAllContactsFromLocaleStorage]: (state, { payload }) => payload,
+});
 
-const filterReducer = (state = "", action) => {
-  switch (action.type) {
-    case CHANGE_FILTER:
-      return action.payload;
-    default:
-      return state;
-  }
-};
+const filterReducer = createReducer("", {
+  [changeFilter]: (_, { payload }) => payload,
+});
 
 const contactsReducer = combineReducers({
   items: contactItemsReducer,
