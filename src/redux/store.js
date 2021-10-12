@@ -3,7 +3,7 @@ import rootReducer from "./rootReducer";
 
 const store = configureStore({
   reducer: rootReducer,
-  devTools: process.env.NODE_ENV === "development",
+  // devTools: process.env.NODE_ENV === "development",
 });
 
 export default store;
